@@ -79,23 +79,23 @@ def login():
       # return "user"
 
 
-# @auth.get("/me")
-# @jwt_required()
-# def me():
-#     user_id = get_jwt_identity()
-#     user = User.query.filter_by(id=user_id).first()
-#     return jsonify({
-#         'username': user.username,
-#         'email': user.email
-#     }), HTTP_200_OK
+@auth.get("/me")
+@jwt_required()
+def me():
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=user_id).first()
 
+    return jsonify({
+        'username': user.username,
+        'email': user.email
+    }), HTTP_200_OK
 
-# @auth.get('/token/refresh')
-# @jwt_required(refresh=True)
-# def refresh_users_token():
-#     identity = get_jwt_identity()
-#     access = create_access_token(identity=identity)
+@auth.get('/token/refresh')   
+@jwt_required(refresh=True)
+def refresh_users_token():
+    identity = get_jwt_identity()
+    access = create_access_token(identity=identity)
 
-#     return jsonify({
-#         'access': access
-#     }), HTTP_200_OK
+    return jsonify({
+        'access': access
+    }), HTTP_200_OK
